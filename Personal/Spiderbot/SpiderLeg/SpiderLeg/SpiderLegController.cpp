@@ -55,7 +55,7 @@ void SpiderLegController::GoNeutral(int index )
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			GotoAngle(&joints[i], joints[i].neutral);
+			GotoAngle(i, joints[i].neutral);
 		}
 		return;
 	}
@@ -63,7 +63,7 @@ void SpiderLegController::GoNeutral(int index )
 		return;
 
 
-	GotoAngle(&joints[index], joints[index].neutral);
+	GotoAngle(index, joints[index].neutral);
 
 }
 
@@ -73,13 +73,13 @@ void SpiderLegController::GoUp(int index)
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			GotoAngle(&joints[i], joints[i].up);
+			GotoAngle(i, joints[i].up);
 		}
 	}
 	if (index < 0 || index > 2)
 		return;
 
-	GotoAngle(&joints[index], joints[index].up);
+	GotoAngle(index, joints[index].up);
 }
 
 void SpiderLegController::GoDown(int index)
@@ -88,21 +88,22 @@ void SpiderLegController::GoDown(int index)
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			GotoAngle(&joints[i], joints[i].down);
+			GotoAngle(i, joints[i].down);
 		}
 	}
 	if (index < 0 || index > 2)
 		return;
 
-	GotoAngle(&joints[index], joints[index].down);
+	GotoAngle(index, joints[index].down);
 }
 
-void SpiderLegController::GotoAngle(Joint * j, int target)
+void SpiderLegController::GotoAngle(int index, int target)
 {
 	// directly go to angle
-	if (j == NULL)
+	if (index < 0 || index > 2)
 		return;
 
+	Joint *j = &joints[index];
 	// save current angle
 	//j->current = angle;
 

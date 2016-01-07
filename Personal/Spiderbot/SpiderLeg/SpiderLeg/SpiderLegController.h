@@ -32,6 +32,7 @@ public:
 	void GoNeutral(int index = ALL_JOINTS);
 	void GoUp(int index = ALL_JOINTS);
 	void GoDown(int index = ALL_JOINTS);
+	void GotoAngle(int index, int target);
 private:
 	
 	struct Joint
@@ -46,7 +47,7 @@ private:
 
 	Joint joints[3];
 
-	void GotoAngle(Joint *j, int target);
+	
 };
 
 #endif
