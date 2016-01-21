@@ -4,6 +4,7 @@
  Author:	GIETA
 */
 
+#include "SpiderQuadLegs.h"
 #include "SpiderLegController.h"
 #include <Servo.h>
 
@@ -19,15 +20,15 @@
 //int joint1Neutral = 30;
 //int joint1Up = 140;
 
-SpiderLegController legs[4];
+SpiderQuadLegs spider;
 
 // the setup function runs once when you press reset or power the board
 
 void SetFrontRight(SpiderLegController *pLeg)
 {
 	// right leg 
-	pLeg->SetDownDegree(0, 130);
-	pLeg->SetNeutralDegree(0, 90);
+	pLeg->SetDownDegree(0, 120);
+	pLeg->SetNeutralDegree(0, 70);
 	pLeg->SetUpDegree(0, 50);
 
 	pLeg->SetDownDegree(1, 180);
@@ -44,7 +45,7 @@ void SetBackRight(SpiderLegController *pLeg)
 	// right leg 
 	pLeg->SetDownDegree(0, 30);
 	pLeg->SetNeutralDegree(0, 80);
-	pLeg->SetUpDegree(0, 120);
+	pLeg->SetUpDegree(0, 110);
 
 	pLeg->SetDownDegree(1, 180);
 	pLeg->SetNeutralDegree(1, 60);
@@ -86,15 +87,20 @@ void SetBackLeft(SpiderLegController *pLeg)
 }
 void setup() 
 {
-	legs[0].Attach(2, 3, 4); // front left
-	legs[1].Attach(5, 6, 7); // back left
-	legs[2].Attach(8, 9, 10); // back right 
-	legs[3].Attach(11, 12, 13); // front right
+	SpiderLegController *frontLeft = spider.GetLeg(SpiderQuadLegs::FrontLeft);
+	SpiderLegController *backLeft = spider.GetLeg(SpiderQuadLegs::BackLeft);
+	SpiderLegController *backRight = spider.GetLeg(SpiderQuadLegs::BackRight);
+	SpiderLegController *frontRight = spider.GetLeg(SpiderQuadLegs::FrontRight);
 
-	SetFrontLeft(legs + 0);
-	SetBackLeft(legs + 1);
-	SetBackRight(legs + 2);
-	SetFrontRight(legs + 3);
+	frontLeft->Attach(2, 3, 4); // front left
+	backLeft->Attach(5, 6, 7); // back left
+	backRight->Attach(8, 9, 10); // back right 
+	frontRight->Attach(11, 12, 13); // front right
+
+	SetFrontLeft(frontLeft);
+	SetBackLeft(backLeft);
+	SetBackRight(backRight);
+	SetFrontRight(frontRight);
 
 	//leg.GoNeutral();
 	//delay(1000);
@@ -105,8 +111,7 @@ void setup()
 	//delay(1000);
 	//leg.GoDown();
 
-	for (int i = 0; i < 4; ++i)
-		legs[i].Init();
+	spider.Init();
 	delay(500);
 
 	
@@ -136,7 +141,7 @@ void setup()
 	
 	for (int i = 0; i < 4; ++i)
 	{
-		WalkCycle(legs + i);
+		spider.Step();
 		delay(100);
 	}
 }
@@ -150,26 +155,5 @@ void loop()
 	//}
 }
 
-// blocking synchronous walk cycle
-void WalkCycle(SpiderLegController *pLeg)
-{
-	int waitTime = 50;
-
-	// horizonta axis go back
-	pLeg->GoDown(0);
-	delay(waitTime);
-
-	// vertical axis go up
-	pLeg->GoUp(1);
-	delay(waitTime);
-
-	// horizontal axis go forward
-	pLeg->GoUp(0);
-	delay(waitTime);
-
-	// vertical axis go down
-	pLeg->GoNeutral(1);
-	delay(waitTime);
-}
 
 

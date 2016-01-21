@@ -88,4 +88,6 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <..\SpiderLeg\SpiderLeg.ino>
 #include <..\SpiderLeg\SpiderLegController.cpp>
 #include <..\SpiderLeg\SpiderLegController.h>
+#include <..\SpiderLeg\SpiderQuadLegs.cpp>
+#include <..\SpiderLeg\SpiderQuadLegs.h>
 #endif

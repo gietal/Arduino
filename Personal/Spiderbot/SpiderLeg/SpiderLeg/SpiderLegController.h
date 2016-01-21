@@ -18,6 +18,8 @@ class SpiderLegController
 public:
 	static int ALL_JOINTS;
 
+	SpiderLegController();
+
 	void Attach(int horizontalJointPin, int verticalJoint1Pin, int verticalJoint2Pin);
 	//void SetPin(int index, int pin);
 

@@ -6,6 +6,17 @@
 
 int SpiderLegController::ALL_JOINTS = -1;
 
+SpiderLegController::SpiderLegController()
+{
+	// set default values
+	for (int i = 0; i < 3; ++i)
+	{
+		SetDownDegree(i, 0);
+		SetNeutralDegree(i, 90);
+		SetUpDegree(i, 180);
+	}
+}
+
 void SpiderLegController::Attach(int horizontalJointPin, int verticalJoint1Pin, int verticalJoint2Pin)
 {
 	joints[0].pin = horizontalJointPin;
